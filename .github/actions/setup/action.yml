@@ -1,0 +1,11 @@
+name: Set up project
+description: Install Node.js and locked npm dependencies with a download cache
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+    - shell: bash
+      run: npm ci

@@ -1,0 +1,45 @@
+{
+  "name": "task-api-cicd",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A guided SIG project demonstrating tested task management and gated container delivery",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --runInBand",
+    "test:ci": "jest --runInBand --coverage",
+    "build": "node scripts/build.js",
+    "check": "npm run lint && npm run typecheck && npm run test:ci && npm run build"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/app.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 85,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    }
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.4",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "jest": "^30.5.2",
+    "supertest": "^7.3.0",
+    "typescript": "^5.9.3"
+  }
+}

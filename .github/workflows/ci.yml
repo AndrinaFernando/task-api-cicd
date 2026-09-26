@@ -1,0 +1,58 @@
+name: CI
+on:
+  push:
+    branches: [dev, staging, main]
+  pull_request:
+    branches: [dev, staging, main]
+  workflow_call:
+permissions:
+  contents: read
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: npm run lint
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: npm run typecheck
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: npm run test:ci
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: npm run build
+  gate:
+    name: CI Gate
+    if: always()
+    needs: [lint, typecheck, test, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every check to pass
+        env:
+          LINT: ${{ needs.lint.result }}
+          TYPES: ${{ needs.typecheck.result }}
+          TESTS: ${{ needs.test.result }}
+          BUILD: ${{ needs.build.result }}
+        run: |
+          for result in "$LINT" "$TYPES" "$TESTS" "$BUILD"; do
+            if [ "$result" != "success" ]; then
+              echo "A required check failed, was cancelled, or was skipped."
+              exit 1
+            fi
+          done
+          echo "All four checks passed." >> "$GITHUB_STEP_SUMMARY"

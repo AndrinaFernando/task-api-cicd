@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Desk · CI/CD Lab</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><span class="eyebrow">ANDRINA'S DEVOPS LAB</span><p class="badge">Task API / 01</p></header>
+    <section class="intro"><h1>A little more<br>organized.</h1><p>Create a task, move it forward, and mark it done.</p></section>
+    <form id="task-form"><label for="title">What needs doing?</label><div class="input-row"><input id="title" name="title" maxlength="120" required placeholder="Prepare my project demonstration"><button type="submit">Add task +</button></div></form>
+    <div class="toolbar"><h2>Your tasks <span id="count">0</span></h2><label>Show <select id="filter"><option value="">All tasks</option><option value="todo">To do</option><option value="in-progress">In progress</option><option value="done">Done</option></select></label></div>
+    <p id="message" role="status" aria-live="polite"></p>
+    <ul id="tasks" aria-label="Tasks"></ul>
+    <p id="empty">No tasks yet. Add your first one above.</p>
+    <footer>Learning demo · Tasks are stored in memory and reset when the server restarts.</footer>
+  </main>
+</body>
+</html>

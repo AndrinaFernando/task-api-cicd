@@ -1,0 +1,11 @@
+services:
+  task-api:
+    image: ghcr.io/andrinafernando/task-api-cicd:${IMAGE_TAG:-latest}
+    ports:
+      - "127.0.0.1:3002:3002"
+    init: true
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
