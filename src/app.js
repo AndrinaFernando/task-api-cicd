@@ -18,7 +18,7 @@ function createApp() {
     next();
   });
 
-  app.get('/health', (_req, res) => res.status(200).send('broken'));
+  app.get('/health', (_req, res) => res.status(200).send('ok'));
   app.get('/api/status', (_req, res) => res.json({ service: 'task-api-cicd', status: 'ready' }));
 
   app.get('/api/tasks', (req, res) => {
